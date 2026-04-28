@@ -1,0 +1,13 @@
+flask
+flask-cors
+pandas
+numpy
+scikit-learn
+joblib
+shap
+google-generativeai
+python-dotenv
+requests
+werkzeug
+sqlalchemy
+gunicorn

@@ -90,7 +90,9 @@ def geolocate_attack(attack_type):
         print(f"Geolocation error: {e}")
         return None
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder=os.path.join(os.path.dirname(__file__), 'frontend', 'dist'),
+            static_url_path='')
 CORS(app)
 
 # Initialize UBA module
@@ -956,5 +958,20 @@ def health():
     return jsonify({"status": "online"})
 
 
+# ── Serve React frontend (production) ──
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_frontend(path):
+    """Serve the built React frontend. Catch-all for client-side routing."""
+    dist_dir = os.path.join(os.path.dirname(__file__), 'frontend', 'dist')
+    if path and os.path.exists(os.path.join(dist_dir, path)):
+        from flask import send_from_directory
+        return send_from_directory(dist_dir, path)
+    else:
+        from flask import send_from_directory
+        return send_from_directory(dist_dir, 'index.html')
+
+
 if __name__ == "__main__":
-    app.run(debug=False, port=5000)
+    port = int(os.getenv("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
