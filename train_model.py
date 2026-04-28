@@ -34,9 +34,9 @@ df["threat_level"] = df["label"].apply(map_threat)
 df.drop("label", axis=1, inplace=True)
 
 # Sample the data to save memory on Render's free tier
-# 125,000 rows -> 25,000 rows
-if len(df) > 25000:
-    df = df.sample(n=25000, random_state=42).reset_index(drop=True)
+# 125,000 rows -> 10,000 rows for extreme memory safety
+if len(df) > 10000:
+    df = df.sample(n=10000, random_state=42).reset_index(drop=True)
     print(f"Sampled down to {len(df)} rows to fit in 512MB RAM.")
 
 # Mappings from app_fixed.py
@@ -61,7 +61,7 @@ X_scaled = scaler.fit_transform(X)
 
 print("Training Random Forest...")
 # Use a very small tree depth and count for extreme memory efficiency
-model = RandomForestClassifier(n_estimators=15, max_depth=10, random_state=42, n_jobs=-1)
+model = RandomForestClassifier(n_estimators=10, max_depth=8, random_state=42, n_jobs=-1)
 model.fit(X_scaled, y)
 
 print("Saving models...")
