@@ -12,7 +12,6 @@ venv/
 .env
 
 # Trained models & data (large files)
-*.pkl
 KDDTrain+.txt
 uba_logs.db
 
