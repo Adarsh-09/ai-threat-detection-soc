@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.DEV ? "http://localhost:5000" : "";
+const BASE_URL = import.meta.env.DEV ? "http://localhost:5000" : "https://ai-threat-detection-soc-tharun.onrender.com";
 
 export interface ThreatInput {
   duration: number;
