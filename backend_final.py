@@ -93,7 +93,7 @@ def geolocate_attack(attack_type):
 app = Flask(__name__,
             static_folder=os.path.join(os.path.dirname(__file__), 'frontend', 'dist'),
             static_url_path='')
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize UBA module
 try:
